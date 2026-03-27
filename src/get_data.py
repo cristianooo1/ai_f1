@@ -1,24 +1,40 @@
 import fastf1
 import os
+import sys  
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CACHE_DIR = os.path.join(BASE_DIR, 'data', 'raw')
 os.makedirs(CACHE_DIR, exist_ok=True)
 
-# !!!!!enable cache to AVOID REDOWNLOADING the data everytime the script is ran!!!!!!!
 fastf1.Cache.enable_cache(CACHE_DIR)
 
-def test_api_connection():
-
-    # load a race from 2025 as test
-    session = fastf1.get_session(2025, '5', 'R')
-    session.load()
+def download_entire_season(year=2025):
+    schedule = fastf1.get_event_schedule(year)
+    official_races = schedule[schedule['RoundNumber'] > 0]
     
-    winner = session.results.iloc[0]
-    fastest_lap = session.laps.pick_fastest()
+    print(f"Found {len(official_races)} race weekends.\n")
     
-    print(f"Race Winner: {winner['FirstName']} {winner['LastName']} ({winner['TeamName']})")
-    print(f"Fastest Lap: {fastest_lap['Driver']} - {fastest_lap['LapTime']}")
+    for index, event in official_races.iterrows():
+        round_num = event['RoundNumber']
+        event_name = event['EventName']
+        
+        print(f"=== Downloading Round {round_num}: {event_name} ===")
+        
+        for session_num in range(1, 6):
+            try:
+                session = fastf1.get_session(year, round_num, session_num)
+                session.load()
+                print(f"  ✅ Successfully loaded: {session.name}")
+                
+            except Exception as e:
+                error_msg = str(e)
+                print(f"  ❌ Failed to load session {session_num}. Error: {error_msg}")
+                
+                # check if it is the rate limit error
+                if "500 calls/h" in error_msg:
+                    print("\n API Rate Limit Reached (500 calls/hour).")
+                    sys.exit() 
+        print("\n")
 
 if __name__ == "__main__":
-    test_api_connection()
+    download_entire_season(2025)
