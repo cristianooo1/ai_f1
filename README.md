@@ -51,9 +51,10 @@ uv run src/get_data.py
 
 ## OBJECTIVE 1: Classify the circuit and the driver
 
-1. **Filter Bad Laps:** Use **Track Status**, **Race Control Messages**, and the `IsAccurate` column to drop laps affected by Safety 2. **Contextual Join:** Join **Weather** data to the **Laps** table based on the closest `SessionTime` to capture track conditions.
-3. **Telemetry Extraction:** For every valid lap, extract the corresponding high-frequency **Car Telemetry** array.
-4. **Spatial Interpolation:** Resample the telemetry arrays over a uniform Distance grid (e.g., one data point every 5 meters) so that every lap vector has the exact same shape for the ML model.
+1. **Filter Bad Laps:** Use **Track Status**, **Race Control Messages**, and the `IsAccurate` column to drop laps affected by Safety Car, or incomplete laps
+2. **Contextual Join:** Join **Weather** data to the **Laps** table based on the closest `SessionTime` to capture track conditions
+3. **Telemetry Extraction:** For every valid lap, extract the corresponding high-frequency **Car Telemetry** array
+4. **Spatial Interpolation:** Resample the telemetry arrays over a uniform Distance grid (e.g. one data point every 5 meters) so that every lap vector has the exact same shape (this is the input to the ML model)
 
 > [!CAUTION]
 > 1. COLUMNS TO DROP!
