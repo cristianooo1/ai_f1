@@ -18,21 +18,21 @@ def download_entire_season(year=2025):
         round_num = event['RoundNumber']
         event_name = event['EventName']
         
-        print(f"=== Downloading Round {round_num}: {event_name} ===")
+        print(f"####################### Downloading Round {round_num}: {event_name} ######################################")
         
         for session_num in range(1, 6):
             try:
                 session = fastf1.get_session(year, round_num, session_num)
                 session.load()
-                print(f"  ✅ Successfully loaded: {session.name}")
+                print(f"  ✅ SUCCESDULLY loaded: {session.name}")
                 
             except Exception as e:
                 error_msg = str(e)
-                print(f"  ❌ Failed to load session {session_num}. Error: {error_msg}")
+                print(f"  ❌ FAILED loading session {session_num}. Error: {error_msg}")
                 
                 # check if it is the rate limit error
                 if "500 calls/h" in error_msg:
-                    print("\n API Rate Limit Reached (500 calls/hour).")
+                    print("\n API RATE LIMIT REACHED (500 calls/hour)!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
                     sys.exit() 
         print("\n")
 

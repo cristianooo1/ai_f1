@@ -28,14 +28,17 @@ uv run src/get_data.py
 ```
 
 > [!WARNING]  
-> servers only allow **500 requests/hour**! the script will **intetionally pause/fail** around Round 10. If you see `"API Rate Limit Reached"` message, wait approx 60 minutes and run the above command again. You might need to run the script in 2-3 batches. Make sure you have 4-5 GB of free disk space!
+> servers only allow **500 requests/hour**! the script will **intetionally pause/fail** around Round 10. If you see `"API Rate Limit Reached"` message, wait approx 60 minutes and run the above command again. You might need to run the script in 2-3 batches. Make sure you have 4-5 GB of free disk space! FOR NOW ONLY RUN IT ONCE TO TEST IF ITS WORKING!!!!!!!!!
 
 
 ### Step 4: test notebooks
-1. open `notebooks/01_circuit_driver.ipynb`
+1. open `notebooks/info_tables_available.ipynb`
 2. in the top right corner click **Select Kernel -> Python Environments** and selected the one named `ai-f1` from `.venv/bin/python`
-3. run all the cells; at the bottom there should be displayed a plot comparing the speeds of 2 drivers!!
+3. run all the cells; you should see all the available tables there
 
+### Step 5 optional: visualize data in a better way
+1. if you are using VSCODE, install **Data Wrangler** extension (the one from microsoft)
+2. after running all the cells, at the top of the file click on  **View data** and open one of the existing workspace tables to visualize the data 
 
 ## Available Tables:
 - **Laps**: 'Time', 'Driver', 'DriverNumber', 'LapTime', 'LapNumber', 'Stint', 'PitOutTime', 'PitInTime', 'Sector1Time', 'Sector2Time', 'Sector3Time', 'Sector1SessionTime', 'Sector2SessionTime', 'Sector3SessionTime', 'SpeedI1', 'SpeedI2', 'SpeedFL', 'SpeedST', 'IsPersonalBest', 'Compound', 'TyreLife', 'FreshTyre', 'Team', 'LapStartTime', 'LapStartDate', 'TrackStatus', 'Position', 'Deleted', 'DeletedReason', 'FastF1Generated', 'IsAccurate'
